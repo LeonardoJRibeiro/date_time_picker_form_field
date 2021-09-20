@@ -1,6 +1,10 @@
 # date_time_picker_form_field
 Date and Time picker that uses Futters FormField and Decoration.
 
+## Demo
+
+![](./demo.gif)
+
 ## Status
 
 🚧 In Construction 🚧
