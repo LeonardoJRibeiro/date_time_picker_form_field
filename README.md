@@ -5,8 +5,6 @@ Date and Time picker that uses Futters FormField and Decoration.
 
 🚧 In Construction 🚧
 
-<<<<<<< HEAD
-=======
 ## Usage
 add a line like this to your package's pubspec.yaml (and run an implicit flutter pub get)
 ```yaml
@@ -88,7 +86,6 @@ class _ExampleState extends State<Example> {
 }
 ```
 
->>>>>>> 2180d2576d0eee8844d8de1cfddba29d28991c51
 
 ## Todo:
 -  [ ] accept only date or time on picker, currently it work with both

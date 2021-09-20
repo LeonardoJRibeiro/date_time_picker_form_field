@@ -9,12 +9,12 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
   date_time_picker_form_field: 
     git:
       url: https://github.com/LeonardoJRibeiro/date_time_picker_form_field
 
+  flutter:
+    sdk: flutter
 dev_dependencies:
   flutter_test:
     sdk: flutter
