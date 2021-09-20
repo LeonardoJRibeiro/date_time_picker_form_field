@@ -1,0 +1,22 @@
+name: example
+description: Date Time Picker Form Field example.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  date_time_picker_form_field: 
+    path: ../
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+ 
+flutter:
+  uses-material-design: true
