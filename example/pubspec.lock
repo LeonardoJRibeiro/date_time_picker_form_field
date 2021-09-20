@@ -46,9 +46,11 @@ packages:
   date_time_picker_form_field:
     dependency: "direct main"
     description:
-      path: ".."
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "38e7fa21a307e119a1b0fa5808bb295e96b66e3e"
+      url: "https://github.com/LeonardoJRibeiro/date_time_picker_form_field"
+    source: git
     version: "0.0.1"
   fake_async:
     dependency: transitive

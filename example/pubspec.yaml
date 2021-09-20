@@ -12,7 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
   date_time_picker_form_field: 
-    path: ../
+    git:
+      url: https://github.com/LeonardoJRibeiro/date_time_picker_form_field
 
 dev_dependencies:
   flutter_test:
