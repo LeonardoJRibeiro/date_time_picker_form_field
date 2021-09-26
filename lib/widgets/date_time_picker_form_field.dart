@@ -19,8 +19,13 @@ class DateTimePickerFormField extends FormField<DateTime?> {
     ///An optional method that validates an input. Returns an error string to display if the input is invalid, or null otherwise.
     String? Function(DateTime? dateTime)? validator,
 
-    ///The initial value. It will be changed on future to 'initialDate' and 'initialTime'.
+    ///The initial DateTime.
     DateTime? initialDateTime,
+    //The initila Date.
+    DateTime? initialDate,
+
+    ///The initial Time
+    String? initialTime,
 
     ///The picker will pick only date wehn true.
     bool onlyDate = false,
@@ -28,6 +33,10 @@ class DateTimePickerFormField extends FormField<DateTime?> {
     ///The picker will pick only time wehn true.
     bool onlyTime = false,
   })  : assert(!onlyDate || !onlyTime),
+        assert(initialTime == null && onlyDate),
+        assert(initialDate == null && onlyTime),
+        assert(initialDateTime != null &&
+            !(initialDate != null || initialTime != null)),
         super(
           key: key,
           validator: (_) => validator?.call(controller.dateAndTime),
@@ -59,6 +68,17 @@ class DateTimePickerFormField extends FormField<DateTime?> {
           minute: initialDateTime.minute,
         ),
       );
+    } else {
+      if (initialDate != null) {
+        controller.value = DateTimePickerValues(date: initialDate);
+      }
+      if (initialTime != null) {
+        final date = DateTime.tryParse('0000-00-00T$initialTime');
+        if (date != null) {
+          controller.value =
+              DateTimePickerValues(time: TimeOfDay.fromDateTime(date));
+        }
+      }
     }
   }
 }
@@ -162,7 +182,8 @@ class _DateTimePickerState extends State<DateTimePicker> {
               ),
           isFocused: widget.focusNode.hasFocus,
           isHovering: _isHovering,
-          isEmpty: widget.controller.dateAndTime == null,
+          isEmpty: widget.controller.dateTime == null &&
+              widget.controller.time == null,
           child: Text(
               '${widget.controller.dateTime != null ? localizations.formatCompactDate(widget.controller.dateTime!) : ''} ${widget.controller.time != null ? localizations.formatTimeOfDay(widget.controller.time!) : ''}'),
         ),
