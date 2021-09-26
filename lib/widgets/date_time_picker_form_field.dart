@@ -35,7 +35,7 @@ class DateTimePickerFormField extends FormField<DateTime?> {
   })  : assert(!onlyDate || !onlyTime),
         assert(initialTime == null || !onlyDate),
         assert(initialDate == null || !onlyTime),
-        assert(initialDateTime != null &&
+        assert(initialDateTime == null ||
             !(initialDate != null || initialTime != null)),
         super(
           key: key,
