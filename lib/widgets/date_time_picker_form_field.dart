@@ -4,13 +4,31 @@ class DateTimePickerFormField extends FormField<DateTime?> {
   DateTimePickerFormField({
     Key? key,
     FocusNode? focusNode,
+
+    ///The decoration of input
     InputDecoration? decoration,
+
+    ///Is the earliest allowable date.
     required DateTime firstDate,
+    //Is the latest allowable date.
     required DateTime lastDate,
+
+    ///Controller thats keep the date or time pickeds, it extends [ValueNotifier] and can be used with a ValueListenableBuild to display the values stored in its state without a [setState].
     required DateTimePickerController controller,
+
+    ///An optional method that validates an input. Returns an error string to display if the input is invalid, or null otherwise.
     String? Function(DateTime? dateTime)? validator,
+
+    ///The initial value. It will be changed on future to 'initialDate' and 'initialTime'.
     DateTime? initialDateTime,
-  }) : super(
+
+    ///The picker will pick only date wehn true.
+    bool onlyDate = false,
+
+    ///The picker will pick only time wehn true.
+    bool onlyTime = false,
+  })  : assert(!onlyDate && !onlyTime),
+        super(
           key: key,
           validator: (_) => validator?.call(controller.dateAndTime),
           builder: (field) {
@@ -22,6 +40,8 @@ class DateTimePickerFormField extends FormField<DateTime?> {
                 firstDate: firstDate,
                 lastDate: lastDate,
                 decoration: decoration,
+                onlyDate: onlyDate,
+                onlyTime: onlyTime,
                 error: field.errorText,
               ),
             );
@@ -52,6 +72,8 @@ class DateTimePicker extends StatefulWidget {
     required this.firstDate,
     required this.lastDate,
     required this.controller,
+    required this.onlyDate,
+    required this.onlyTime,
   }) : super(key: key);
 
   final FocusNode focusNode;
@@ -60,6 +82,8 @@ class DateTimePicker extends StatefulWidget {
   final DateTime firstDate;
   final DateTime lastDate;
   final DateTimePickerController controller;
+  final bool onlyDate;
+  final bool onlyTime;
   @override
   _DateTimePickerState createState() => _DateTimePickerState();
 }
@@ -96,17 +120,31 @@ class _DateTimePickerState extends State<DateTimePicker> {
     return InkWell(
       focusNode: widget.focusNode,
       onTap: () async {
-        final date = await showDatePicker(
-          context: context,
-          initialDate: widget.controller.dateTime ?? DateTime.now(),
-          firstDate: widget.firstDate,
-          lastDate: widget.lastDate,
-        );
-        final time = await showTimePicker(
-          context: context,
-          initialTime: widget.controller.time ?? TimeOfDay.now(),
-        );
-        if (date != null && time != null) {
+        DateTime? date;
+        TimeOfDay? time;
+        if (!widget.onlyTime) {
+          date = await showDatePicker(
+            context: context,
+            initialDate: widget.controller.dateTime ?? DateTime.now(),
+            firstDate: widget.firstDate,
+            lastDate: widget.lastDate,
+          );
+        }
+        if (!widget.onlyDate) {
+          time = await showTimePicker(
+            context: context,
+            initialTime: widget.controller.time ?? TimeOfDay.now(),
+          );
+        }
+        if (widget.onlyDate && date != null) {
+          widget.controller.value = DateTimePickerValues(
+            date: date,
+          );
+        } else if (widget.onlyTime && time != null) {
+          widget.controller.value = DateTimePickerValues(
+            time: time,
+          );
+        } else if (date != null && time != null) {
           widget.controller.value = DateTimePickerValues(
             date: date,
             time: time,

@@ -1,6 +1,6 @@
 name: date_time_picker_form_field
 description: Date and Time picker that uses Futters FormField and Decoration.
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/LeonardoJRibeiro/date_time_form_field
 
 environment:
@@ -14,7 +14,3 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-
-flutter:
-
