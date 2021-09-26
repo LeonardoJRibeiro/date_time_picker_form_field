@@ -164,10 +164,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
           isHovering: _isHovering,
           isEmpty: widget.controller.dateAndTime == null,
           child: Text(
-            widget.controller.dateAndTime != null
-                ? '${localizations.formatCompactDate(widget.controller.dateAndTime!)} ${localizations.formatTimeOfDay(widget.controller.time!)}'
-                : '',
-          ),
+              '${widget.controller.dateTime != null ? localizations.formatCompactDate(widget.controller.dateTime!) : ''} ${widget.controller.time != null ? localizations.formatTimeOfDay(widget.controller.time!) : ''}'),
         ),
       ),
     );
