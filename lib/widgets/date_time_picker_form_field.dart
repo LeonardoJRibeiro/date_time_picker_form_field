@@ -27,7 +27,7 @@ class DateTimePickerFormField extends FormField<DateTime?> {
 
     ///The picker will pick only time wehn true.
     bool onlyTime = false,
-  })  : assert(!onlyDate && !onlyTime),
+  })  : assert(!onlyDate || !onlyTime),
         super(
           key: key,
           validator: (_) => validator?.call(controller.dateAndTime),
