@@ -33,8 +33,8 @@ class DateTimePickerFormField extends FormField<DateTime?> {
     ///The picker will pick only time wehn true.
     bool onlyTime = false,
   })  : assert(!onlyDate || !onlyTime),
-        assert(initialTime == null && onlyDate),
-        assert(initialDate == null && onlyTime),
+        assert(initialTime == null || !onlyDate),
+        assert(initialDate == null || !onlyTime),
         assert(initialDateTime != null &&
             !(initialDate != null || initialTime != null)),
         super(
