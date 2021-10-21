@@ -92,7 +92,7 @@ class _ExampleState extends State<Example> {
 
 
 ## Todo:
--  [ ] accept only date or time on picker, currently it work with both
+-  [x] accept only date or time on picker, currently it work with both
 -  [ ] write documentation
 -  [ ] tests
 
