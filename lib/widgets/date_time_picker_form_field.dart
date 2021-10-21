@@ -17,7 +17,7 @@ class DateTimePickerFormField extends FormField<DateTime?> {
     required DateTimePickerController controller,
 
     ///An optional method that validates an input. Returns an error string to display if the input is invalid, or null otherwise.
-    String? Function(DateTime? dateTime)? validator,
+    String? Function(DateTimePickerValues? values)? validator,
 
     ///The initial DateTime.
     DateTime? initialDateTime,
@@ -35,11 +35,10 @@ class DateTimePickerFormField extends FormField<DateTime?> {
   })  : assert(!onlyDate || !onlyTime),
         assert(initialTime == null || !onlyDate),
         assert(initialDate == null || !onlyTime),
-        assert(initialDateTime == null ||
-            !(initialDate != null || initialTime != null)),
+        assert(initialDateTime == null || !(initialDate != null || initialTime != null)),
         super(
           key: key,
-          validator: (_) => validator?.call(controller.dateAndTime),
+          validator: (_) => validator?.call(controller.value),
           builder: (field) {
             return ValueListenableBuilder(
               valueListenable: controller,
@@ -75,8 +74,7 @@ class DateTimePickerFormField extends FormField<DateTime?> {
       if (initialTime != null) {
         final date = DateTime.tryParse('0000-00-00T$initialTime');
         if (date != null) {
-          controller.value =
-              DateTimePickerValues(time: TimeOfDay.fromDateTime(date));
+          controller.value = DateTimePickerValues(time: TimeOfDay.fromDateTime(date));
         }
       }
     }
@@ -145,7 +143,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
         if (!widget.onlyTime) {
           date = await showDatePicker(
             context: context,
-            initialDate: widget.controller.dateTime ?? DateTime.now(),
+            initialDate: widget.controller.date ?? DateTime.now(),
             firstDate: widget.firstDate,
             lastDate: widget.lastDate,
           );
@@ -175,17 +173,14 @@ class _DateTimePickerState extends State<DateTimePicker> {
         onEnter: (_) => _handleHover(true),
         onExit: (_) => _handleHover(false),
         child: InputDecorator(
-          decoration: (widget.decoration ?? const InputDecoration())
-              .applyDefaults(Theme.of(context).inputDecorationTheme)
-              .copyWith(
+          decoration: (widget.decoration ?? const InputDecoration()).applyDefaults(Theme.of(context).inputDecorationTheme).copyWith(
                 errorText: widget.error,
               ),
           isFocused: widget.focusNode.hasFocus,
           isHovering: _isHovering,
-          isEmpty: widget.controller.dateTime == null &&
-              widget.controller.time == null,
+          isEmpty: widget.controller.date == null && widget.controller.time == null,
           child: Text(
-              '${widget.controller.dateTime != null ? localizations.formatCompactDate(widget.controller.dateTime!) : ''} ${widget.controller.time != null ? localizations.formatTimeOfDay(widget.controller.time!) : ''}'),
+              '${widget.controller.date != null ? localizations.formatCompactDate(widget.controller.date!) : ''} ${widget.controller.time != null ? localizations.formatTimeOfDay(widget.controller.time!) : ''}'),
         ),
       ),
     );
